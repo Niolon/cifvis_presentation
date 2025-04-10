@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CifVis: Crystal Structure Visualization</title>
+  <link rel="stylesheet" href="node_modules/reveal.js/dist/reveal.css">
+  <link rel="stylesheet" href="node_modules/reveal.js/dist/theme/white.css">
+  <link rel="stylesheet" href="node_modules/reveal.js/plugin/highlight/monokai.css">
+  <style>
+    .reveal pre {
+      width: 100%;
+      margin: 0;
+    }
+    .reveal pre code {
+      padding: 15px;
+    }
+
+    .reveal h1 {
+        font-size: 5em;
+        padding-top: 100px;
+    }
+
+    .reveal h2 {
+        font-size: 3.5em;
+        padding: 50px;
+    }
+
+    .reveal h3 {
+        font-size: 1.3em;
+        padding-top: 60px;
+    }
+
+    .columns {
+      display: flex;
+      width: 100%;
+    }
+    .column {
+      flex: 1;
+      padding: 0 10px;
+      text-align: left;
+      font-size: 1.5em;
+      line-height: 1.5em;
+    }
+    .cifvis-container {
+      width: 100%;
+      height: 950px;
+    }
+    
+    .reload {
+        font-size: 0.5em;
+        width: 100%;
+        height: 80pt;
+    }
+
+    /* Add this to change the caption font size */
+    cifview-widget .crystal-caption {
+        font-size: 1em !important;
+        background: rgb(231, 231, 231) !important;
+    }
+    
+    cifview-widget {
+        border-radius: 0px !important;
+        background: white !important;
+    }
+
+    cifview-widget .control-button {
+        width: 80px !important;
+        height: 80px !important;
+        background: rgb(250, 250, 250) !important;
+        border-width: 10px !important;
+        border-color: black !important;
+        border-radius: 0px !important;
+    }
+
+    cifview-widget .control-button svg {
+        width: 60px !important;
+        height: 60px !important;
+    }
+
+    /* For atom labels and other text in the 3D view */
+    cifview-widget {
+        font-size: 0.8em;
+    }
+
+  </style>
+</head>
+<body>
+  <div class="reveal">
+    <div class="slides">
+      <!-- Title Slide -->
+      <section>
+        <h1>CifVis</h1>
+        <h2>Crystal Structure Visualization in JavaScript</h3>
+        <p style="font-size: 2em;">
+          Dr. Paul Niklas Ruth
+        </p>
+        <p style="font-size: 2em;">
+            Advanced Research Computing
+        </p>
+        <p style="font-size: 2em;">
+            Durham University
+        </p>
+
+      </section>
+
+      <!-- Single Column Slide -->
+      <section>
+        <h2>What is CifVis?</h2>
+        <div style="font-size: 2em; text-align: left;">
+            <p>A JavaScript library and web component that enables:</p>
+            <ul>
+                <li>Interactive 3D visualization of crystal structures</li>
+                <li>Direct reading of Crystallographic Information Files (CIF)</li>
+                <li>Support for anisotropic displacement parameters (thermal ellipsoids)</li>
+                <li>No server-side processing required</li>
+                <li>Simple integration into websites or applications</li>
+            </ul>
+        </div>
+      </section>
+
+      <section>
+        <h2>Interaction with the display</h2>
+        <div class="columns">
+            <div class="column">
+                <h3>Mouse interaction</h3>
+                Rotate: left drag<br>
+                Select: left click<br>
+                Drag: right drag<br>
+                Zoom: Mouse wheel
+
+                <h3> Touch interaction</h3>
+                Rotate: one-finger drag<br>
+                Select: one-finger touch<br>
+                Drag: two-finger drag<br>
+                Zoom: two-finger pinch
+
+            </div>
+            <div class="column">
+                <div class="cifvis-container" id="cifvis-interaction">
+                    <cifview-widget
+                    src="/src/capsaicin.cif"
+                    caption="Crystal structure of capsaicin <a href='https://doi.org/10.1107/S2053229625001706' target='_blank'>(Lozinšek, 2025)</a>."
+                    hydrogen-mode="constant">
+                    </cifview-widget>
+                </div>
+            </div>
+        </div>
+      </section>
+
+      <section>
+        <h2>Buttons are adapted to the structure</h2>
+      
+
+        <div class="columns">
+            <div class="column">
+                <div class="cifvis-container" id="cifvis-interaction">
+                    <cifview-widget
+                    src="/src/capsaicin.cif"
+                    caption="Hydrogen button adapts to hydrogens present <a href='https://doi.org/10.1107/S2053229625001706' target='_blank'>(Lozinšek, 2025)</a>."
+                    hydrogen-mode="constant">
+                    </cifview-widget>
+                </div>
+            </div>
+            <div class="column">
+                <div class="cifvis-container" id="cifvis-interaction">
+                    <cifview-widget
+                    src="/src/capsaicin.cif"
+                    caption="If disorder is present: an additional button will appear <a href='https://doi.org/10.1107/S2053229625001706' target='_blank'>(Lozinšek, 2025)</a>."
+                    hydrogen-mode="constant">
+                    </cifview-widget>
+                </div>                
+            </div>
+            <div class="column">
+                <div class="cifvis-container" id="cifvis-interaction">
+                    <cifview-widget
+                    src="/src/capsaicin.cif"
+                    caption="There is also an adaptive button for growing structures if bonds outside structures are present <a href='https://doi.org/10.1107/S2053229625001706' target='_blank'>(Lozinšek, 2025)</a>."
+                    hydrogen-mode="constant">
+                    </cifview-widget>
+                </div>    
+            </div>
+
+        </div>
+        </section>
+
+        <section>
+            <h2>CifVis displays what is in the CIF file</h2>
+            <div class="columns">
+                <div class="column">
+                    <ul>
+                        <li>Bonds are read from CIF</li>
+                        <li>This includes hydrogen bonds</li>
+                        <li>Only if all bonds are missing, CifVis will add them</li>
+                    </ul>
+                    <div class="columns">
+                        <div class="column">
+                            <button class="reload" id="btn-load-bonds">Reload with bonds</button>
+                        </div>
+                        <div class="column">
+                            <button class="reload" id="btn-load-nobonds">Reload without bonds</button>
+                        </div>
+                    </div>
+                    <div style="height: 100px;"> </div>
+                    <ul>
+                        <li>Invalid cifs will create an error message.</li>
+                    </ul>
+                    <button class="reload" id="btn-load-invalid">Load invalid structure</button>
+                </div>
+                <div class="column">
+                    <div class="cifvis-container" id="cifvis-loading">
+                        <cifview-widget
+                          src="/src/large_nobonds.cif"
+                          caption="Crystal Structure Caption"
+                          id="cifview-loading">
+                        </cifview-widget>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+      <!-- Double Column Slide with Code and CifVis Widget -->
+      <section>
+        <h2>Integration as HTML Component</h2>
+        <div class="columns">
+          <div class="column">
+            <pre><code class="html" style="height: 800px; max-height: 100%; font-size: 1.5em; line-height: 1.5em;">&lt;script type="module"&gt;
+  import { CifViewWidget } from 'cifvis';
+&lt;/script&gt;
+
+&lt;cifview-widget 
+  src="example.cif"
+  caption="Crystal Structure Caption"
+  hydrogen-mode="constant"&gt;
+&lt;/cifview-widget&gt;</code></pre>
+            
+          </div>
+          <div class="column">
+            <div class="cifvis-container" id="cifvis-demo">
+                <cifview-widget
+                  src="/src/xylitol.cif"
+                  caption="Crystal Structure Caption"
+                  hydrogen-mode="constant">
+                </cifview-widget>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section>
+        <h2>Atoms can be omitted from the displayed structure</h2>
+        <div class="columns">
+            <div class="column">
+                <h3>No filtered atoms</h3>
+                <div class="cifvis-container">
+                    <cifview-widget 
+                        src="src/fullerene.cif"
+                        caption="Complete structure including solvent molecules">
+                    </cifview-widget>
+                </div>
+            </div>
+            
+            <div class="column">
+                <h3>filtered-atoms="C200,H200,C201>H218"</h3>
+                <div class="cifvis-container">
+                    <cifview-widget 
+                        src="src/fullerene.cif"
+                        caption="Structure with solvent molecules removed"
+                        filtered-atoms="C200,H200,C201>H218">
+                    </cifview-widget>
+                </div>
+            </div>
+        </div>
+      </section>
+
+    </div>
+  </div>
+
+  <!-- Scripts -->
+  <script src="node_modules/reveal.js/dist/reveal.js"></script>
+  <script src="node_modules/reveal.js/plugin/highlight/highlight.js"></script>
+  <script src="node_modules/d3/dist/d3.min.js"></script>
+  <script type="module">
+    import { CifViewWidget } from 'cifvis';
+    
+    // Initialize Reveal.js
+    Reveal.initialize({
+      width: 2560,
+      height: 1440,
+      controls: true,
+      progress: true,
+      center: false,
+      hash: true,
+      plugins: [ RevealHighlight ]
+    });
+
+    // Initialize the CifVis widget with sample data after slides are loaded
+    Reveal.on('ready', event => {
+      //const widget = document.createElement('cifview-widget');
+      //widget.setAttribute('data', sampleCif);
+      //widget.setAttribute('hydrogen-mode', 'constant');
+      //document.getElementById('cifvis-demo').appendChild(widget);
+      //widget.style.width = '100%';
+      //widget.style.height = '100%';
+    });
+
+    const loadBondsButton = document.getElementById("btn-load-bonds");
+    loadBondsButton.addEventListener('click', () => {
+        const url = "/src/large_bonds.cif";
+        loadingDemonstration(url);
+    });
+
+    const loadNoBondsButton = document.getElementById("btn-load-nobonds");
+    loadNoBondsButton.addEventListener('click', () => {
+        const url = "/src/large_nobonds.cif";
+        loadingDemonstration(url);
+    });
+
+    const loadInvalidButton = document.getElementById("btn-load-invalid");
+    loadInvalidButton.addEventListener('click', () => {
+        const url = "/src/invalid.cif";
+        loadingDemonstration(url);
+    });
+
+    function loadingDemonstration(file) {
+        const loadingWidget = document.getElementById("cifview-loading");
+        loadingWidget.setAttribute("src", file);
+    }
+    
+  </script>
+</body>
+</html>

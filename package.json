@@ -1,0 +1,22 @@
+{
+  "name": "cifvis_presentation",
+  "version": "1.0.0",
+  "description": "Presentation of CifVis at the BCA",
+  "license": "MPL-2.0",
+  "author": "",
+  "type": "commonjs",
+  "main": "index.js",
+  "scripts": {
+    "test": "vitest run ",
+    "dev": "vite serve"
+  },
+  "dependencies": {
+    "cifvis": "^0.9.4",
+    "d3": "^7.9.0",
+    "reveal.js": "^5.2.1"
+  },
+  "devDependencies": {
+    "vite": "^6.2.5",
+    "vitest": "^3.1.1"
+  }
+}
