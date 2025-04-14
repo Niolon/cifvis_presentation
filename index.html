@@ -7,215 +7,9 @@
   <link rel="stylesheet" href="node_modules/reveal.js/dist/reveal.css">
   <link rel="stylesheet" href="node_modules/reveal.js/dist/theme/white.css">
   <link rel="stylesheet" href="node_modules/reveal.js/plugin/highlight/monokai.css">
+  <link rel="stylesheet" href="style.css">
   <style>
-    /* Global styles */
-    .reveal {
-      --slide-height: 1200px;
-      --slide-padding: 40px;
-      --heading-color: #333333;
-      --content-font-size: 1.5em;
-      --content-line-height: 1.5em;
-    }
-
-    /* Typography */
-    .reveal h1 {
-      font-size: 5em;
-      margin-top: 100px;
-      color: var(--heading-color);
-    }
-
-    .reveal h2 {
-      font-size: 3em;
-      margin-top: 50px;
-      margin-bottom: 50px;
-      color: var(--heading-color);
-    }
-
-    .reveal h3 {
-      font-size: 1.3em;
-      margin-top: 60px;
-      margin-bottom: 20px;
-      color: var(--heading-color);
-    }
-
-    .reveal p, .reveal ul {
-      font-size: var(--content-font-size);
-      line-height: var(--content-line-height);
-      text-align: left;
-    }
-
-    /* Layout */
-    .columns {
-      display: flex;
-      width: 100%;
-      height: 100%;
-      gap: 20px;
-    }
-
-    .column {
-      flex: 1;
-      padding: 0 10px;
-      display: flex;
-      flex-direction: column;
-    }
-
-    /* Code blocks */
-    .reveal pre {
-      width: 100%;
-      margin: 0;
-      max-height: 800px;
-      overflow: auto;
-    }
-
-    .reveal pre code {
-      padding: 15px;
-      font-size: var(--content-font-size);
-      line-height: var(--content-line-height);
-    }
-
-    /* CifVis containers */
-    .cifvis-container {
-      width: 100%;
-      height: 100%;
-      flex-grow: 1;
-    }
-
-    /* Buttons */
-    .reload {
-      font-size: 0.8em;
-      width: 100%;
-      height: 60px;
-      margin: 10px 0;
-      cursor: pointer;
-      background-color: #f0f0f0;
-      border: 1px solid #ccc;
-      border-radius: 4px;
-      transition: background-color 0.3s;
-    }
-
-    .reload:hover {
-      background-color: #e0e0e0;
-    }
-
-    section {
-        height: calc(var(--slide-height) - 2 * var(--slide-padding));
-    }
-
-    .button-row {
-      display: flex;
-      gap: 10px;
-      margin: 20px 0;
-    }
-
-    /* Spacers */
-    .spacer {
-      flex-grow: 1;
-    }
-
-    /* CifVis widget customization */
-    cifview-widget {
-      border-radius: 0 !important;
-      background: white !important;
-      height: 100%;
-    }
-
-    cifview-widget .crystal-caption {
-      font-size: 1em !important;
-      border-top: 2px solid #333333 !important;
-    }
-
-    cifview-widget .control-button {
-      width: 80px !important;
-      height: 80px !important;
-      background: rgb(255, 255, 255) !important;
-      border: 1px solid rgb(170, 170, 170) !important;
-      border-radius: 5px !important;
-    }
-
-    cifview-widget .control-button svg {
-      width: 60px !important;
-      height: 60px !important;
-    }
-
-    /* Architecture slide styles */
-    .architecture-layers {
-        list-style: none;
-        padding: 0;
-        margin: 0;
-    }
-
-    .layer {
-    margin-bottom: 30px;
-    font-size: calc(0.6 * var(--content-font-size));
-    }
-
-    .layer-name {
-    font-weight: bold;
-    margin-bottom: 10px;
-    font-size: 1.2em;
-    }
-
-    .layer-desc {
-    line-height: 1.2;
-    }
-
-    .architecture-diagram {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 0px;
-    }
-
-    .arch-layer {
-    width: 100%;
-    display: flex;
-    justify-content: center;
-    }
-
-    .arch-box {
-    width: 80%;
-    padding: 5px;
-    border-radius: 5px;
-    text-align: center;
-    color: white;
-    }
-
-    .arch-box h4 {
-    margin: 0 0 5px 0;
-    font-size: 1em;
-    }
-
-    .arch-box p {
-    margin: 0 0 5px 0;
-    font-size: 0.7em;
-    text-align: center;
-    }
-
-    .arch-details {
-    font-size: 0.6em;
-    }
-
-    .arch-arrow {
-    font-size: 2.5em;
-    color: #666;
-    }
-
-    .cif {
-    background-color: #3066BE;
-    }
-
-    .crystal {
-    background-color: #119DA4;
-    }
-
-    .ortep {
-    background-color: #6D9DC5;
-    }
-
-    .viewer {
-    background-color: #80DED9;
-    color: #333;
-    }
+    
   </style>
 </head>
 <body>
@@ -291,8 +85,8 @@
           <div class="column">
             <div class="cifvis-container">
               <cifview-widget
-                src="/src/capsaicin.cif"
-                caption="Hydrogen button adapts to hydrogens present <a href='https://doi.org/10.1107/S2053229625001706' target='_blank'>(Lozinšek, 2025)</a>."
+                src="/src/hani.cif"
+                caption="Hydrogen button adapts to hydrogens present <a href='https://doi.org/10.1002/chem.202303762' target='_blank'>(Meurer et al., 2024)</a>."
                 hydrogen-mode="constant">
               </cifview-widget>
             </div>
@@ -300,7 +94,7 @@
           <div class="column">
             <div class="cifvis-container">
               <cifview-widget
-                src="/src/capsaicin.cif"
+                src="/src/disorder.cif"
                 caption="If disorder is present: an additional button will appear <a href='https://doi.org/10.1107/S2053229625001706' target='_blank'>(Lozinšek, 2025)</a>."
                 hydrogen-mode="constant">
               </cifview-widget>
@@ -309,7 +103,7 @@
           <div class="column">
             <div class="cifvis-container">
               <cifview-widget
-                src="/src/capsaicin.cif"
+                src="/src/urea.cif"
                 caption="There is also an adaptive button for growing structures if bonds outside structures are present <a href='https://doi.org/10.1107/S2053229625001706' target='_blank'>(Lozinšek, 2025)</a>."
                 hydrogen-mode="constant">
               </cifview-widget>
@@ -341,7 +135,7 @@
           <div class="column">
             <div class="cifvis-container" id="cifvis-loading">
               <cifview-widget
-                src="/src/large_nobonds.cif"
+                src="/src/large_bonds.cif"
                 caption="Crystal Structure Caption"
                 id="cifview-loading">
               </cifview-widget>
@@ -463,6 +257,30 @@
           </div>
         </div>
       </section>
+
+      <section>
+        <h2>Testing the robustness against the COD</h2>
+        <div id="cod-bar-plot"></div>
+      </section>
+
+      <section>
+        <h2>Why do CIF files fail?</h2>
+        <div id="cod-bar-plot-structure"></div>
+      </section>
+      <section>
+        <h2>What is missing</h2>
+      </section>
+      <section>
+        <h2>ICDM Slide</h2>
+      </section>
+
+      <section>
+        <h2>Thank you for you kind attention</h2>
+
+        <p>Display all amino acids?</p>
+      </section>
+
+
     </div>
   </div>
 
@@ -505,7 +323,293 @@
     function loadingDemonstration(file) {
       const loadingWidget = document.getElementById("cifview-loading");
       loadingWidget.setAttribute("src", file);
+      //var collectString = "";
+      //loadingWidget.viewer.state.currentStructure.children.forEach(c => {
+      //  if (c.userData.type === "bond") {
+      //    const bond = c.userData.bondData;
+      //    collectString = collectString.concat(`${bond.atom1Label} ${bond.atom2Label} ${bond.bondLength} .\n`)
+      //  }
+      //});
+      //console.log(collectString)
     }
-  </script>
+
+    function getCategoryColor(name) {
+  const colorMap = {
+    "successful": "steelblue",
+    "CrystalStructure failed": "orange",
+    "Ortep3D failed": "red"
+  };
+  return colorMap[name] || "gray"; // Default to gray if name not found
+}
+
+    // Define the data
+const totalDataIn = {
+  "total": 522188,
+  "CrystalStructure failed": 9599,
+  "Ortep3D failed": 12
+};
+
+// Calculate successful count
+const successfulCount = totalDataIn["total"] - totalDataIn["CrystalStructure failed"] - totalDataIn["Ortep3D failed"];
+
+// Create data array in the format D3 expects
+const chartDataTotal = [
+  { name: "successful", count: successfulCount },
+  { name: "CrystalStructure failed", count: totalDataIn["CrystalStructure failed"] },
+  { name: "Ortep3D failed", count: totalDataIn["Ortep3D failed"] }
+];
+
+const width = 2500;
+const height = 1100;
+const marginTop = 70;
+const marginRight = 300;
+const marginBottom = 150;
+var marginLeft = 700; // Increased for category labels
+
+// Create the SVG container
+const svgTotal = d3.select("#cod-bar-plot")
+  .append("svg")
+    .attr("width", width)
+    .attr("height", height);
+
+// Create x scale (for bar lengths)
+const xTotal = d3.scaleLinear()
+  .domain([0, totalDataIn["total"]])
+  .range([0, width - marginLeft - marginRight]);
+
+// Create y scale (for bar positions)
+const yTotal = d3.scaleBand()
+  .domain(chartDataTotal.map(d => d.name))
+  .range([marginTop, height - marginBottom])
+  .padding(0.2);
+
+// Add bars
+svgTotal.append("g")
+  .attr("transform", `translate(${marginLeft},0)`)
+  .selectAll("rect")
+  .data(chartDataTotal)
+  .join("rect")
+    .attr("x", 0)
+    .attr("y", d => yTotal(d.name))
+    .attr("width", d => xTotal(d.count))
+    .attr("height", yTotal.bandwidth())
+    .attr("fill", d => getCategoryColor(d.name));
+
+// Add x-axis with increased font size
+svgTotal.append("g")
+  .attr("transform", `translate(${marginLeft},${height - marginBottom})`)
+  .call(d3.axisBottom(xTotal).ticks(5).tickFormat(d => d3.format(".2s")(d)))
+  .call(g => {
+    g.select(".domain").attr("stroke-width", 4);
+    g.selectAll(".tick line").attr("stroke-width", 4).attr("y2", 15);
+    g.selectAll("text").attr("font-size", "38px").attr("y", 30);
+  })
+  .append("text")
+    .attr("x", width - marginLeft - marginRight)
+    .attr("y", 120)
+    .attr("fill", "currentColor")
+    .attr("text-anchor", "end")
+    .attr("font-size", "50px")
+    .attr("font-weight", "bold")
+    .text("Number of structures");
+
+// Add y-axis with increased font size and color-coded labels
+svgTotal.append("g")
+  .attr("transform", `translate(${marginLeft - 30},0)`)
+  .call(d3.axisLeft(yTotal).tickSize(0))
+  .call(g => {
+    g.select(".domain").remove();
+    g.selectAll("text")
+      .attr("font-size", "50px")
+      .attr("font-weight", "bold")
+      .attr("fill", d => getCategoryColor(d));
+  });
+
+// Add labels on right side of bars with count and percentage
+svgTotal.append("g")
+  .attr("transform", `translate(${marginLeft},0)`)
+  .selectAll("g")
+  .data(chartDataTotal)
+  .join("g")
+  .each(function(d) {
+    const group = d3.select(this);
+    const percentage = (d.count / totalDataIn["total"] * 100).toFixed(2);
+    const isLargeBar = percentage > 90;
+    const barColor = getCategoryColor(d.name);
+    const textColor = isLargeBar ? "white" : barColor;
+    
+    // Position for text
+    const xPos = xTotal(successfulCount) - 30;
+    const yPosBase = yTotal(d.name) + yTotal.bandwidth() / 2;
+    const anchor = "end";
+    
+    // Add count
+    group.append("text")
+      .attr("x", xPos)
+      .attr("y", yPosBase - 2 * yTotal.bandwidth() / 12)
+      .attr("text-anchor", anchor)
+      .attr("text-align", "center")
+      .attr("font-size", "50px")
+      .attr("font-family", "sans-serif")
+      .attr("font-weight", "bold")
+      .attr("fill", textColor)
+      .text(d3.format(",")(d.count));
+    
+    // Add percentage
+    group.append("text")
+      .attr("x", xPos)
+      .attr("y", yPosBase + 3 * yTotal.bandwidth() / 12)
+      .attr("text-anchor", anchor)
+      .attr("text-align", "center")
+      .attr("font-size", "42px")
+      .attr("font-family", "sans-serif")
+      .attr("fill", textColor)
+      .text(`${percentage}%`);
+  });
+
+  const structureFailedData = [
+    { name: "No atoms or cell", count: 1414 + 156 + 50 },
+    { name: "Missing Uani parameters", count: 1556 },
+    { name: "Non-existent bond atoms", count: 3479 + 2161 },
+    { name: "Invalid symmetry", count: 749 + 192 },
+    { name: "Other Errors", count: 6 }
+  ]
+
+  marginLeft = 800;
+  const totalStructureErrors = 9599;
+
+  // Create the SVG container
+  const svgStructure = d3.select("#cod-bar-plot-structure")
+    .append("svg")
+    .attr("width", width)
+    .attr("height", height);
+
+  const xStructure = d3.scaleLinear()
+    .domain([0, totalStructureErrors])
+    .range([0, width - marginLeft - marginRight]);
+
+  const yStructure = d3.scaleBand()
+    .domain(structureFailedData.map(d => d.name))
+    .range([marginTop, height - marginBottom])
+    .padding(0.2);
+
+  svgStructure.append("g")
+  .attr("transform", `translate(${marginLeft},0)`)
+  .selectAll("rect")
+  .data(structureFailedData)
+  .join("rect")
+    .attr("x", 0)
+    .attr("y", d => yStructure(d.name))
+    .attr("width", d => xStructure(d.count))
+    .attr("height", yStructure.bandwidth())
+    .attr("fill", d => "orange");
+
+  svgStructure.append("g")
+  .attr("transform", `translate(${marginLeft},${height - marginBottom})`)
+  .call(d3.axisBottom(xStructure).ticks(5).tickFormat(d => d3.format(".2s")(d)))
+  .call(g => {
+    g.select(".domain").attr("stroke-width", 4);
+    g.selectAll(".tick line").attr("stroke-width", 4).attr("y2", 15);
+    g.selectAll("text").attr("font-size", "38px").attr("y", 30);
+  })
+  .append("text")
+    .attr("x", width - marginLeft - marginRight)
+    .attr("y", 120)
+    .attr("fill", "currentColor")
+    .attr("text-anchor", "end")
+    .attr("font-size", "50px")
+    .attr("font-weight", "bold")
+    .text("Number of structures");
+
+// Add y-axis with increased font size and color-coded labels
+  svgStructure.append("g")
+    .attr("transform", `translate(${marginLeft - 30},0)`)
+    .call(d3.axisLeft(yStructure).tickSize(0))
+    .call(g => {
+      g.select(".domain").remove();
+      g.selectAll("text")
+        .attr("font-size", "50px")
+        .attr("font-weight", "bold")
+        .attr("fill", d => getCategoryColor(d));
+    });
+
+  // Add labels on right side of bars with count and percentage
+svgStructure.append("g")
+  .attr("transform", `translate(${marginLeft},0)`)
+  .selectAll("g")
+  .data(structureFailedData)
+  .join("g")
+  .each(function(d) {
+    const group = d3.select(this);
+    const percentage = (d.count / totalStructureErrors * 100).toFixed(2);
+    const isLargeBar = percentage > 90;
+    const barColor = "orange";
+    const textColor = isLargeBar ? "white" : barColor;
+    
+    // Position for text
+    const xPos = xStructure(totalStructureErrors) - 30;
+    const yPosBase = yStructure(d.name) + yStructure.bandwidth() / 2;
+    const anchor = "end";
+    
+    // Add count
+    group.append("text")
+      .attr("x", xPos)
+      .attr("y", yPosBase - 2 * yStructure.bandwidth() / 12)
+      .attr("text-anchor", anchor)
+      .attr("text-align", "center")
+      .attr("font-size", "50px")
+      .attr("font-family", "sans-serif")
+      .attr("font-weight", "bold")
+      .attr("fill", textColor)
+      .text(d3.format(",")(d.count));
+    
+    // Add percentage
+    group.append("text")
+      .attr("x", xPos)
+      .attr("y", yPosBase + 3 * yStructure.bandwidth() / 12)
+      .attr("text-anchor", anchor)
+      .attr("text-align", "center")
+      .attr("font-size", "42px")
+      .attr("font-family", "sans-serif")
+      .attr("fill", textColor)
+      .text(`${percentage}%`);
+  });
+
+  document.addEventListener('DOMContentLoaded', function() {
+  const cifWidgets = document.querySelectorAll('cifview-widget');
+  let initializedWidgets = new Set();
+  
+  // Store original src attributes and remove them
+  cifWidgets.forEach(widget => {
+    widget.dataset.cifSrc = widget.getAttribute('src');
+    widget.removeAttribute('src');
+  });
+  
+  // Initialize widgets when their slide becomes active
+  Reveal.on('slidechanged', event => {
+    const currentSlide = event.currentSlide;
+    const widgets = currentSlide.querySelectorAll('cifview-widget');
+    
+    widgets.forEach(widget => {
+      if (!initializedWidgets.has(widget) && widget.dataset.cifSrc) {
+        widget.setAttribute('src', widget.dataset.cifSrc);
+        initializedWidgets.add(widget);
+      }
+    });
+  });
+  
+  // Initialize widgets on the first slide
+  const initialSlide = Reveal.getCurrentSlide();
+  if (initialSlide) {
+    const widgets = initialSlide.querySelectorAll('cifview-widget');
+    widgets.forEach(widget => {
+      if (widget.dataset.cifSrc) {
+        widget.setAttribute('src', widget.dataset.cifSrc);
+        initializedWidgets.add(widget);
+      }
+    });
+  }
+});
+    </script>
 </body>
 </html>
