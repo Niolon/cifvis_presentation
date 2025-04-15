@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CifVis: Crystal Structure Visualization</title>
+  <style>
+    
+ </style>
+  <script type="module" crossorigin src="/cifvis_presentation/assets/main-aB21nKdj.js"></script>
+  <link rel="modulepreload" crossorigin href="/cifvis_presentation/assets/reveal-OpwdKu1w.js">
+  <link rel="modulepreload" crossorigin href="/cifvis_presentation/assets/cifvis-D7itqmy8.js">
+  <link rel="modulepreload" crossorigin href="/cifvis_presentation/assets/d3-Dfta__CX.js">
+  <link rel="stylesheet" crossorigin href="/cifvis_presentation/assets/main-DsEqOunH.css">
+</head>
+<body>
+  <div class="reveal">
+    <div class="slides">
+      <!-- Title Slide -->
+      <section>
+        <h1>CifVis</h1>
+        <h2>Crystal Structure Visualization in JavaScript</h2>
+        <p style="font-size: 2em; text-align: center;">
+          Paul Niklas Ruth
+        </p>
+        <p style="font-size: 2em; text-align: center;">
+          Advanced Research Computing
+        </p>
+        <p style="font-size: 2em; text-align: center;">
+          Durham University
+        </p>
+      </section>
+
+      <!-- What is CifVis Slide -->
+      <section>
+        <h2>Why does CifVis exist?</h2>
+        <div style="font-size: 1.5em; text-align: left;">
+          <ul>
+            <li>For another project I needed an ORTEP display of structures as a web component</li>
+            <ul style="font-size: 0.8em;">
+              <li>Work from cif files</li>
+              <li>Display thermal ellipsoids</li>
+            </ul>
+            <li class="fragment">I could not find an existing solution</li>
+            <li class="fragment">Fine, I will build one myself</li>
+            <li class="fragment">How hard can it be to make this useful to others?</li>
+          </ul>
+        </div>
+      </section>
+
+      <section>
+        <h2>Add structures with minimal HTML</h2>
+        <div class="columns">
+          <div class="column">
+            <pre style="height: 100%;"><code class="html">&lt;script 
+  type="module" 
+  src="https://niolon.github.io/cifvis/dist/cifvis.alldeps.js"&gt;
+&lt;/script&gt;
+
+&lt;cifview-widget 
+  src="example.cif"
+  caption="Crystal Structure Caption"
+  hydrogen-mode="constant"&gt;
+&lt;/cifview-widget&gt;</code></pre>
+          </div>
+          <div class="column">
+            <div class="cifvis-container" id="cifvis-demo">
+              <cifview-widget
+                src="./src/assets/xylitol.cif"
+                caption="Crystal Structure Caption"
+                hydrogen-mode="constant">
+              </cifview-widget>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Interaction Slide -->
+      <section>
+        <h2>Interaction with the display</h2>
+        <div class="columns">
+          <div class="column">
+            <h3>Mouse interaction</h3>
+            <p>
+              Rotate: left drag<br>
+              Select: left click<br>
+              Drag: right drag<br>
+              Zoom: Mouse wheel
+            </p>
+
+            <h3>Touch interaction</h3>
+            <p>
+              Rotate: one-finger drag<br>
+              Select: one-finger touch<br>
+              Drag: two-finger drag<br>
+              Zoom: two-finger pinch
+            </p>
+          </div>
+          <div class="column">
+            <div class="cifvis-container" id="cifvis-interaction">
+              <cifview-widget
+                src="./src/assets/capsaicin.cif"
+                caption="Crystal structure of capsaicin <a href='https://doi.org/10.1107/S2053229625001706' target='_blank'>(Lozinšek, 2025)</a>."
+                hydrogen-mode="constant">
+              </cifview-widget>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Adaptive Buttons Slide -->
+      <section>
+        <h2>Buttons are adapted to the structure</h2>
+        <div class="columns">
+          <div class="column">
+            <div class="cifvis-container">
+              <cifview-widget
+                src="./src/assets/hani.cif"
+                caption="Hydrogen button adapts to hydrogens present <a href='https://doi.org/10.1002/chem.202303762' target='_blank'>(Meurer et al., 2024)</a>."
+                hydrogen-mode="constant">
+              </cifview-widget>
+            </div>
+          </div>
+          <div class="column">
+            <div class="cifvis-container">
+              <cifview-widget
+                src="./src/assets/disorder.cif"
+                caption="If disorder is present: an additional button will appear <a href='https://doi.org/10.1002/ange.202110456' target='_blank'>(Ding et al., 2021)</a>."
+                hydrogen-mode="constant">
+              </cifview-widget>
+            </div>                
+          </div>
+          <div class="column">
+            <div class="cifvis-container">
+              <cifview-widget
+                src="./src/assets/urea.cif"
+                caption="There is also an adaptive button for growing structures if bonds outside structures are present <a href='https://doi.org/10.1107/S0108767304015120' target='_blank'>(Birkedal et al., 2004)</a>."
+                hydrogen-mode="constant">
+              </cifview-widget>
+            </div>    
+          </div>
+        </div>
+      </section>
+
+      <!-- CIF Display Slide -->
+      <section>
+        <h2>CifVis displays what is in the CIF file</h2>
+        <div class="columns">
+          <div class="column">
+            <ul>
+              <li>Bonds are read from CIF</li>
+              <li>This includes hydrogen bonds</li>
+              <li>Only if all bonds are missing, CifVis will add them</li>
+            </ul>
+            <div class="button-row">
+              <button class="reload" id="btn-load-bonds">Reload with bonds</button>
+              <button class="reload" id="btn-load-nobonds">Reload without bonds</button>
+            </div>
+            <div class="spacer"></div>
+            <div class="fragment">
+              <ul>
+                <li>Invalid cifs will create an error message.</li>
+              </ul>
+              <button class="reload" id="btn-load-invalid">Load invalid structure</button>
+            </div>
+          </div>
+          <div class="column">
+            <div class="cifvis-container" id="cifvis-loading">
+              <cifview-widget
+                src="./src/assets/large_bonds.cif"
+                caption="Large structure demonstration <a href='https://doi.org/10.1021/acs.nanolett.7b02284' target='_blank'>(Li et al., 2017)</a>."
+                id="cifview-loading">
+              </cifview-widget>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Integration Slide -->
+
+
+      <!-- Filtered Atoms Slide -->
+      <section>
+        <h2>Atoms can be omitted</h2>
+        <div class="columns">
+          <div class="column">
+            No filtered atoms
+            <div class="cifvis-container">
+              <cifview-widget 
+                src="./src/assets/fullerene.cif"
+                caption="Complete structure including solvent molecules">
+              </cifview-widget>
+            </div>
+          </div>
+          <div class="column">
+            <code>filtered-atoms="C200,H200,C201>H218"</code>
+            <div class="cifvis-container">
+              <cifview-widget 
+                src="./src/assets/fullerene.cif"
+                caption="Structure with solvent molecules removed"
+                filtered-atoms="C200,H200,C201>H218">
+              </cifview-widget>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section>
+        <h2>CifVis Library Architecture</h2>
+        <div class="columns" style="align-items: center;">
+          <div class="column">
+            <ul class="architecture-layers">
+              <li class="layer">
+                <div class="layer-name">CIF</div>
+                <div class="layer-desc">Parses the CIF text format into structured data</div>
+              </li>
+              <li class="layer">
+                <div class="layer-name">CrystalStructure</div>
+                <div class="layer-desc">Creates a model with atoms, bonds, and unit cell information</div>
+              </li>
+              <li class="layer">
+                <div class="layer-name">ORTEP3DStructure</div>
+                <div class="layer-desc">Builds 3D visual representation with Three.js objects</div>
+              </li>
+              <li class="layer">
+                <div class="layer-name">CrystalViewer</div>
+                <div class="layer-desc">Provides interactive camera, selection, and display controls</div>
+              </li>
+            </ul>
+          </div>
+          <div class="column">
+            <div class="architecture-diagram">
+              <div class="arch-layer">
+                <div class="arch-box cif">
+                  <h4>CIF</h4>
+                  <p>Text → Structured Data</p>
+                  <div class="arch-details">Loops, Blocks, Data</div>
+                </div>
+              </div>
+              <div class="arch-arrow">↓</div>
+              <div class="arch-layer">
+                <div class="arch-box crystal">
+                  <h4>CrystalStructure</h4>
+                  <p>Domain Model</p>
+                  <div class="arch-details">Atoms, Bonds, Cell, Symmetry</div>
+                </div>
+              </div>
+              <div class="arch-arrow">↓</div>
+              <div class="arch-layer">
+                <div class="arch-box ortep">
+                  <h4>ORTEP3DStructure</h4>
+                  <p>Visual Model</p>
+                  <div class="arch-details">Meshes, Materials, Transformations</div>
+                </div>
+              </div>
+              <div class="arch-arrow">↓</div>
+              <div class="arch-layer">
+                <div class="arch-box viewer">
+                  <h4>CrystalViewer</h4>
+                  <p>User Interface</p>
+                  <div class="arch-details">Camera, Selection, Modifiers</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section>
+        <h2>Testing the robustness against the COD</h2>
+        <div id="cod-bar-plot"></div>
+      </section>
+
+      <section>
+        <h2>Most failures are attributed to inconsistencies within the files.</h2>
+        <div id="cod-bar-plot-structure"></div>
+      </section>
+      <section>
+        <h2>What is missing</h2>
+        <div style="font-size: 1.5em; text-align: left;">
+          <ul>
+            <li>Cell packing</li>
+            <li>Custom growing</li>
+            <li>Displaying Isosurfaces</li>
+            <li>Orthographic projection</li>
+            <li>Different Bond styles</li>
+          </ul>
+        </div>
+      </section>
+      <section>
+        <h2>What does cifvis offer</h2>
+        <div class="columns">
+          <div class="column">
+            <p>As a widget</p>
+            <ul>
+              <li>Easy batteries included display of crystal structure data</li>
+              <li>Thermal ellipsoids</li>
+              <li>Handling of basic disorder</li>
+              <li>Selection and information display for bonds</li>
+            </ul>
+          </div>
+          <div class="column">
+            <p>As a JavaScript library</p>
+            <ul>
+              <li>Object abstraction for CIF (including blocks, loops and esd handling)</li>
+              <li>Access to thermal ellipsoid object as three.js group</li>
+              <li>CrystalViewer that can be attached to DOM element with a hook for callback on selection</li>
+            </ul>
+
+          </div>
+        </div>
+      </section>
+      <section>
+        <img src="/cifvis_presentation/assets/ICDM10_ADVERT-B8HbIscr.jpg" style="width: 100%; object-fit: scale-down;">
+      </section>
+
+      <section>
+        <h2>Thank you for you kind attention</h2>
+
+        <div class="columns">
+          <div class="column">
+            <p>Feedback/Help:</p>
+            <p>Oleg Dolomanov</p>
+            <p>Horst Puschmann</p>
+            <p>Florian Kleemiss</p>
+            <p>Florian Meurer</p>
+            <p>Toby Blundell</p>
+          </div>
+          <div class="column">
+            <p>Advice during Coding:</p>
+            <p>Samantha Finnigan</p>
+
+            <p></p>
+            <p>Funding:</p>
+            <img src="/cifvis_presentation/assets/epsrc-DMkK1Inh.png" style="width: 500px;">
+            
+          </div>
+        </div>
+      </section>
+
+
+    </div>
+  </div>
+
+  
+
+  <!-- Scripts -->
+</body>
+</html>
