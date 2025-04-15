@@ -7,7 +7,7 @@
   <link rel="stylesheet" href="node_modules/reveal.js/dist/reveal.css">
   <link rel="stylesheet" href="node_modules/reveal.js/dist/theme/white.css">
   <link rel="stylesheet" href="node_modules/reveal.js/plugin/highlight/monokai.css">
-  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="src/style.css">
   <style>
     
   </style>
@@ -20,7 +20,7 @@
         <h1>CifVis</h1>
         <h2>Crystal Structure Visualization in JavaScript</h2>
         <p style="font-size: 2em; text-align: center;">
-          Dr. Paul Niklas Ruth
+          Paul Niklas Ruth
         </p>
         <p style="font-size: 2em; text-align: center;">
           Advanced Research Computing
@@ -32,16 +32,45 @@
 
       <!-- What is CifVis Slide -->
       <section>
-        <h2>What is CifVis?</h2>
-        <div style="font-size: 1em; text-align: left;">
-          <p>A JavaScript library and web component that enables:</p>
+        <h2>Why does CifVis exist?</h2>
+        <div style="font-size: 1.5em; text-align: left;">
           <ul>
-            <li>Interactive 3D visualization of crystal structures</li>
-            <li>Direct reading of Crystallographic Information Files (CIF)</li>
-            <li>Support for anisotropic displacement parameters (thermal ellipsoids)</li>
-            <li>No server-side processing required</li>
-            <li>Simple integration into websites or applications</li>
+            <li>For another project I needed an ORTEP display of structures as a web component</li>
+            <ul style="font-size: 0.8em;">
+              <li>Work from cif files</li>
+              <li>Display thermal ellipsoids</li>
+            </ul>
+            <li class="fragment">I could not find an existing solution</li>
+            <li class="fragment">Fine, I will build one myself</li>
+            <li class="fragment">How hard can it be to make this useful to others?</li>
           </ul>
+        </div>
+      </section>
+
+      <section>
+        <h2>Add structures with minimal HTML</h2>
+        <div class="columns">
+          <div class="column">
+            <pre style="height: 100%;"><code class="html">&lt;script 
+  type="module" 
+  src="https://niolon.github.io/cifvis/dist/cifvis.alldeps.js"&gt;
+&lt;/script&gt;
+
+&lt;cifview-widget 
+  src="example.cif"
+  caption="Crystal Structure Caption"
+  hydrogen-mode="constant"&gt;
+&lt;/cifview-widget&gt;</code></pre>
+          </div>
+          <div class="column">
+            <div class="cifvis-container" id="cifvis-demo">
+              <cifview-widget
+                src="/src/assets/xylitol.cif"
+                caption="Crystal Structure Caption"
+                hydrogen-mode="constant">
+              </cifview-widget>
+            </div>
+          </div>
         </div>
       </section>
 
@@ -69,7 +98,7 @@
           <div class="column">
             <div class="cifvis-container" id="cifvis-interaction">
               <cifview-widget
-                src="/src/capsaicin.cif"
+                src="/src/assets/capsaicin.cif"
                 caption="Crystal structure of capsaicin <a href='https://doi.org/10.1107/S2053229625001706' target='_blank'>(Lozinšek, 2025)</a>."
                 hydrogen-mode="constant">
               </cifview-widget>
@@ -85,7 +114,7 @@
           <div class="column">
             <div class="cifvis-container">
               <cifview-widget
-                src="/src/hani.cif"
+                src="/src/assets/hani.cif"
                 caption="Hydrogen button adapts to hydrogens present <a href='https://doi.org/10.1002/chem.202303762' target='_blank'>(Meurer et al., 2024)</a>."
                 hydrogen-mode="constant">
               </cifview-widget>
@@ -94,8 +123,8 @@
           <div class="column">
             <div class="cifvis-container">
               <cifview-widget
-                src="/src/disorder.cif"
-                caption="If disorder is present: an additional button will appear <a href='https://doi.org/10.1107/S2053229625001706' target='_blank'>(Lozinšek, 2025)</a>."
+                src="/src/assets/disorder.cif"
+                caption="If disorder is present: an additional button will appear <a href='https://doi.org/10.1002/ange.202110456' target='_blank'>(Ding et al., 2021)</a>."
                 hydrogen-mode="constant">
               </cifview-widget>
             </div>                
@@ -103,8 +132,8 @@
           <div class="column">
             <div class="cifvis-container">
               <cifview-widget
-                src="/src/urea.cif"
-                caption="There is also an adaptive button for growing structures if bonds outside structures are present <a href='https://doi.org/10.1107/S2053229625001706' target='_blank'>(Lozinšek, 2025)</a>."
+                src="/src/assets/urea.cif"
+                caption="There is also an adaptive button for growing structures if bonds outside structures are present <a href='https://doi.org/10.1107/S0108767304015120' target='_blank'>(Birkedal et al., 2004)</a>."
                 hydrogen-mode="constant">
               </cifview-widget>
             </div>    
@@ -127,16 +156,18 @@
               <button class="reload" id="btn-load-nobonds">Reload without bonds</button>
             </div>
             <div class="spacer"></div>
-            <ul>
-              <li>Invalid cifs will create an error message.</li>
-            </ul>
-            <button class="reload" id="btn-load-invalid">Load invalid structure</button>
+            <div class="fragment">
+              <ul>
+                <li>Invalid cifs will create an error message.</li>
+              </ul>
+              <button class="reload" id="btn-load-invalid">Load invalid structure</button>
+            </div>
           </div>
           <div class="column">
             <div class="cifvis-container" id="cifvis-loading">
               <cifview-widget
-                src="/src/large_bonds.cif"
-                caption="Crystal Structure Caption"
+                src="/src/assets/large_bonds.cif"
+                caption="Large structure demonstration <a href='https://doi.org/10.1021/acs.nanolett.7b02284' target='_blank'>(Li et al., 2017)</a>."
                 id="cifview-loading">
               </cifview-widget>
             </div>
@@ -145,31 +176,7 @@
       </section>
 
       <!-- Integration Slide -->
-      <section>
-        <h2>Integration as HTML Component</h2>
-        <div class="columns">
-          <div class="column">
-            <pre style="height: 100%;"><code class="html">&lt;script type="module"&gt;
-  import { CifViewWidget } from 'cifvis';
-&lt;/script&gt;
 
-&lt;cifview-widget 
-  src="example.cif"
-  caption="Crystal Structure Caption"
-  hydrogen-mode="constant"&gt;
-&lt;/cifview-widget&gt;</code></pre>
-          </div>
-          <div class="column">
-            <div class="cifvis-container" id="cifvis-demo">
-              <cifview-widget
-                src="/src/xylitol.cif"
-                caption="Crystal Structure Caption"
-                hydrogen-mode="constant">
-              </cifview-widget>
-            </div>
-          </div>
-        </div>
-      </section>
 
       <!-- Filtered Atoms Slide -->
       <section>
@@ -179,7 +186,7 @@
             No filtered atoms
             <div class="cifvis-container">
               <cifview-widget 
-                src="src/fullerene.cif"
+                src="src/assets/fullerene.cif"
                 caption="Complete structure including solvent molecules">
               </cifview-widget>
             </div>
@@ -188,7 +195,7 @@
             <code>filtered-atoms="C200,H200,C201>H218"</code>
             <div class="cifvis-container">
               <cifview-widget 
-                src="src/fullerene.cif"
+                src="src/assets/fullerene.cif"
                 caption="Structure with solvent molecules removed"
                 filtered-atoms="C200,H200,C201>H218">
               </cifview-widget>
@@ -264,20 +271,70 @@
       </section>
 
       <section>
-        <h2>Why do CIF files fail?</h2>
+        <h2>Most failures are attributed to inconsistencies within the files.</h2>
         <div id="cod-bar-plot-structure"></div>
       </section>
       <section>
         <h2>What is missing</h2>
+        <div style="font-size: 1.5em; text-align: left;">
+          <ul>
+            <li>Cell packing</li>
+            <li>Custom growing</li>
+            <li>Displaying Isosurfaces</li>
+            <li>Orthographic projection</li>
+            <li>Different Bond styles</li>
+          </ul>
+        </div>
       </section>
       <section>
-        <h2>ICDM Slide</h2>
+        <h2>What does cifvis offer</h2>
+        <div class="columns">
+          <div class="column">
+            <p>As a widget</p>
+            <ul>
+              <li>Easy batteries included display of crystal structure data</li>
+              <li>Thermal ellipsoids</li>
+              <li>Handling of basic disorder</li>
+              <li>Selection and information display for bonds</li>
+            </ul>
+          </div>
+          <div class="column">
+            <p>As a JavaScript library</p>
+            <ul>
+              <li>Object abstraction for CIF (including blocks, loops and esd handling)</li>
+              <li>Access to thermal ellipsoid object as three.js group</li>
+              <li>CrystalViewer that can be attached to DOM element with a hook for callback on selection</li>
+            </ul>
+
+          </div>
+        </div>
+      </section>
+      <section>
+        <img src="/src/assets/images/ICDM10_ADVERT.jpg" style="width: 100%; object-fit: scale-down;">
       </section>
 
       <section>
         <h2>Thank you for you kind attention</h2>
 
-        <p>Display all amino acids?</p>
+        <div class="columns">
+          <div class="column">
+            <p>Feedback/Help:</p>
+            <p>Oleg Dolomanov</p>
+            <p>Horst Puschmann</p>
+            <p>Florian Kleemiss</p>
+            <p>Florian Meurer</p>
+            <p>Toby Blundell</p>
+          </div>
+          <div class="column">
+            <p>Advice during Coding:</p>
+            <p>Samantha Finnigan</p>
+
+            <p></p>
+            <p>Funding:</p>
+            <img src="src/assets/images/epsrc.png" style="width: 500px;">
+            
+          </div>
+        </div>
       </section>
 
 
@@ -307,17 +364,17 @@
     // Button event handlers
     const loadBondsButton = document.getElementById("btn-load-bonds");
     loadBondsButton.addEventListener('click', () => {
-      loadingDemonstration("/src/large_bonds.cif");
+      loadingDemonstration("/src/assets/large_bonds.cif");
     });
 
     const loadNoBondsButton = document.getElementById("btn-load-nobonds");
     loadNoBondsButton.addEventListener('click', () => {
-      loadingDemonstration("/src/large_nobonds.cif");
+      loadingDemonstration("/src/assets/large_nobonds.cif");
     });
 
     const loadInvalidButton = document.getElementById("btn-load-invalid");
     loadInvalidButton.addEventListener('click', () => {
-      loadingDemonstration("/src/invalid.cif");
+      loadingDemonstration("/src/assets/invalid.cif");
     });
 
     function loadingDemonstration(file) {
