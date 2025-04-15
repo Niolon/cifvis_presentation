@@ -7,11 +7,11 @@
   <style>
     
  </style>
-  <script type="module" crossorigin src="/cifvis_presentation/assets/main--LT19LRz.js"></script>
+  <script type="module" crossorigin src="/cifvis_presentation/assets/main-Bqd0SD1D.js"></script>
   <link rel="modulepreload" crossorigin href="/cifvis_presentation/assets/reveal-OpwdKu1w.js">
   <link rel="modulepreload" crossorigin href="/cifvis_presentation/assets/cifvis-D7itqmy8.js">
   <link rel="modulepreload" crossorigin href="/cifvis_presentation/assets/d3-Dfta__CX.js">
-  <link rel="stylesheet" crossorigin href="/cifvis_presentation/assets/main-CvztZh_d.css">
+  <link rel="stylesheet" crossorigin href="/cifvis_presentation/assets/main-6rWn2ia3.css">
 </head>
 <body>
   <div class="reveal">
@@ -20,13 +20,13 @@
       <section>
         <h1>CifVis</h1>
         <h2>Crystal Structure Visualization in JavaScript</h2>
-        <p style="font-size: 2em; text-align: center;">
+        <p style="font-size: 2em; text-align: center !important;">
           Paul Niklas Ruth
         </p>
-        <p style="font-size: 2em; text-align: center;">
+        <p style="font-size: 2em; text-align: center !important;">
           Advanced Research Computing
         </p>
-        <p style="font-size: 2em; text-align: center;">
+        <p style="font-size: 2em; text-align: center !important;">
           Durham University
         </p>
       </section>
@@ -34,12 +34,13 @@
       <!-- What is CifVis Slide -->
       <section>
         <h2>Why does CifVis exist?</h2>
-        <div style="font-size: 1.5em; text-align: left;">
+        <div style="font-size: 1.3em; text-align: left;">
           <ul>
             <li>For another project I needed an ORTEP display of structures as a web component</li>
             <ul style="font-size: 0.8em;">
               <li>Work from cif files</li>
               <li>Display thermal ellipsoids</li>
+              <li>Have all the CIF processing done locally on the computer accessing the structure</li>
             </ul>
             <li class="fragment">I could not find an existing solution</li>
             <li class="fragment">Fine, I will build one myself</li>
@@ -233,31 +234,26 @@
               <div class="arch-layer">
                 <div class="arch-box cif">
                   <h4>CIF</h4>
-                  <p>Text → Structured Data</p>
-                  <div class="arch-details">Loops, Blocks, Data</div>
+                  <div class="arch-details">Block -> Loop</div>
                 </div>
               </div>
               <div class="arch-arrow">↓</div>
               <div class="arch-layer">
                 <div class="arch-box crystal">
                   <h4>CrystalStructure</h4>
-                  <p>Domain Model</p>
-                  <div class="arch-details">Atoms, Bonds, Cell, Symmetry</div>
                 </div>
               </div>
               <div class="arch-arrow">↓</div>
               <div class="arch-layer">
                 <div class="arch-box ortep">
                   <h4>ORTEP3DStructure</h4>
-                  <p>Visual Model</p>
-                  <div class="arch-details">Meshes, Materials, Transformations</div>
+                  <div class="arch-details">getGroup() returns the THREE.js Group</div>
                 </div>
               </div>
               <div class="arch-arrow">↓</div>
               <div class="arch-layer">
                 <div class="arch-box viewer">
                   <h4>CrystalViewer</h4>
-                  <p>User Interface</p>
                   <div class="arch-details">Camera, Selection, Modifiers</div>
                 </div>
               </div>
@@ -308,6 +304,16 @@
             </ul>
 
           </div>
+        </div>
+      </section>
+      <section>
+        <h2>The library is available on GitHub</h2>
+        <div style="font-size: 1.5em;">
+          <p style="height: 50px;"></p>
+          <p>The code <a href="https://github.com/Niolon/cifvis">https://github.com/Niolon/cifvis</a></p>
+          <p>Example: Online CIF Viewer: <a href="https://niolon.github.io/cifvis">https://niolon.github.io/cifvis</a></p>
+          <p style="height: 50px;"></p>
+          <p class="fragment">These slides: <a href="https://niolon.github.io/cifvis_presentation">https://niolon.github.io/cifvis_presentation</a></p>
         </div>
       </section>
       <section>
