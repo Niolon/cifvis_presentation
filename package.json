@@ -4,11 +4,14 @@
   "description": "Presentation of CifVis at the BCA",
   "license": "MPL-2.0",
   "author": "",
-  "type": "commonjs",
+  "type": "module",
   "main": "index.js",
   "scripts": {
-    "test": "vitest run ",
-    "dev": "vite serve"
+    "dev": "vite serve",
+    "build": "vite build",
+    "preview": "vite preview",
+    "test": "vitest run",
+    "deploy": "npm run build && gh-pages -d dist"
   },
   "dependencies": {
     "cifvis": "^0.9.4",
@@ -16,7 +19,8 @@
     "reveal.js": "^5.2.1"
   },
   "devDependencies": {
-    "vite": "^6.2.5",
-    "vitest": "^3.1.1"
+    "gh-pages": "^6.1.1",
+    "glob": "^10.3.10",
+    "vite": "^6.2.5"
   }
 }
