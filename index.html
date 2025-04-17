@@ -11,6 +11,9 @@
 </head>
 <body>
   <div class="reveal">
+    <div class="logo">
+      <img src="./src/assets/images/DurhamUniversity.svg">
+    </div>
     <div class="slides">
       <!-- Title Slide -->
       <section>
@@ -104,40 +107,6 @@
           </div>
         </div>
       </section>
-
-      <!-- Adaptive Buttons Slide -->
-      <!-- <section>
-        <h2>Buttons are adapted to the structure</h2>
-        <div class="columns">
-          <div class="column">
-            <div class="cifvis-container">
-              <cifview-widget
-                src="./src/assets/hani.cif"
-                caption="Hydrogen button adapts to hydrogens present <a href='https://doi.org/10.1002/chem.202303762' target='_blank'>(Meurer et al., 2024)</a>."
-                hydrogen-mode="constant">
-              </cifview-widget>
-            </div>
-          </div>
-          <div class="column">
-            <div class="cifvis-container">
-              <cifview-widget
-                src="./src/assets/disorder.cif"
-                caption="If disorder is present: an additional button will appear <a href='https://doi.org/10.1002/ange.202110456' target='_blank'>(Ding et al., 2021)</a>."
-                hydrogen-mode="constant">
-              </cifview-widget>
-            </div>                
-          </div>
-          <div class="column">
-            <div class="cifvis-container">
-              <cifview-widget
-                src="./src/assets/urea.cif"
-                caption="There is also an adaptive button for growing structures if bonds outside structures are present <a href='https://doi.org/10.1107/S0108767304015120' target='_blank'>(Birkedal et al., 2004)</a>."
-                hydrogen-mode="constant">
-              </cifview-widget>
-            </div>    
-          </div>
-        </div>
-      </section> -->
 
       <section>
         <h2>Buttons are adapted to the structure</h2>
@@ -305,7 +274,7 @@
       </section>
       <section>
         <h2>What is missing</h2>
-        <div style="font-size: 1.5em; text-align: left;">
+        <div style="font-size: 1.5em;">
           <ul>
             <li>Cell packing</li>
             <li>Custom growing</li>
@@ -342,18 +311,19 @@
         <h2>The library is available on GitHub</h2>
         <div style="font-size: 1.5em;">
           <p style="height: 50px;"></p>
-          <p>The code <a href="https://github.com/Niolon/cifvis">https://github.com/Niolon/cifvis</a></p>
-          <p>Example: Online CIF Viewer: <a href="https://niolon.github.io/cifvis">https://niolon.github.io/cifvis</a></p>
+          <p>The code <a href="https://github.com/Niolon/cifvis" target='_blank'>https://github.com/Niolon/cifvis</a></p>
+          <p>Example: Online CIF Viewer: <a href="https://niolon.github.io/cifvis" target='_blank'>https://niolon.github.io/cifvis</a></p>
           <p style="height: 50px;"></p>
-          <p class="fragment">These slides: <a href="https://niolon.github.io/cifvis_presentation">https://niolon.github.io/cifvis_presentation</a></p>
+          <p class="fragment">These slides: <a href="https://niolon.github.io/cifvis_presentation" target='_blank'>https://niolon.github.io/cifvis_presentation</a></p>
         </div>
       </section>
+
       <section>
         <img src="./src/assets/images/ICDM10_ADVERT.jpg" style="width: 100%; object-fit: scale-down;">
       </section>
 
       <section>
-        <h2>Thank you for you kind attention</h2>
+        <h2>Thanks to</h2>
 
         <div class="columns">
           <div class="column">
@@ -399,8 +369,10 @@
       height: 1440,
       controls: true,
       progress: true,
-      center: false,
+      center: true,
       hash: true,
+      viewdistance: 100,
+      preloadIframes: true,
       plugins: [ RevealHighlight ]
     });
 
