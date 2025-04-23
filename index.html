@@ -7,7 +7,7 @@
   <style>
     
  </style>
-  <script type="module" crossorigin src="/cifvis_presentation/assets/main-UHRYnDkR.js"></script>
+  <script type="module" crossorigin src="/cifvis_presentation/assets/main-BO-ykT0b.js"></script>
   <link rel="modulepreload" crossorigin href="/cifvis_presentation/assets/reveal-OpwdKu1w.js">
   <link rel="modulepreload" crossorigin href="/cifvis_presentation/assets/cifvis-D7itqmy8.js">
   <link rel="modulepreload" crossorigin href="/cifvis_presentation/assets/d3-Dfta__CX.js">
@@ -22,7 +22,7 @@
       <!-- Title Slide -->
       <section>
         <h1>CifVis</h1>
-        <h2>Crystal Structure Visualization in JavaScript</h2>
+        <h2>Crystal Structure Visualisation in JavaScript</h2>
         <p style="font-size: 2em; text-align: center !important;">
           Paul Niklas Ruth
         </p>
@@ -32,6 +32,10 @@
         <p style="font-size: 2em; text-align: center !important;">
           Durham University
         </p>
+      </section>
+
+      <section>
+        <h1>Part 1: The result</h1>
       </section>
 
       <!-- What is CifVis Slide -->
@@ -279,7 +283,7 @@
         <div id="cod-bar-plot-structure"></div>
       </section>
       <section>
-        <h2>What is missing</h2>
+        <h2>What is currently missing</h2>
         <div style="font-size: 1.5em;">
           <ul>
             <li>Cell packing</li>
@@ -291,7 +295,7 @@
         </div>
       </section>
       <section>
-        <h2>What does cifvis offer</h2>
+        <h2>What does CifVis offer</h2>
         <div class="columns">
           <div class="column">
             <p>As a widget</p>
@@ -352,7 +356,258 @@
         </div>
       </section>
 
+      <section>
+        <h1>Part 2: Development</h1>
+      </section>
 
+      <section>
+        <h2>Working with Claude</h2>
+        <ul>
+          <li>Setting up a dedicated project for development</li>
+          <ul style="font-size: 0.8em;">
+            <li>Provide a meaningful project instruction</li>
+            <li>Upload created files as reference</li>
+            <li>Means that the LLM can get information about existing implementation via RAG</li>
+          </ul>
+          <li>Constant back and forth to have a consistency and a balance between overengineering and "underengineering."</li>
+          <ul style="font-size: 0.8em;">
+            <li>A large language model only imitates the thinking contained in the text of the training set</li>
+            <li>Common issues: Not really reusing components unless prompted; Being caught in a direction once it is in chat text; Sometimes quite wordy code (LLMs can be thought of having a limited amount of information retrieved/processed per token).</li>
+            <li>Be careful to delete chats with ideas that have not been implemented</li>
+          </ul>
+        </ul>
+      </section>
+
+      <section>
+        <h2>JavaScript dependencies</h2>
+        <div class="columns">
+          <div class="column">
+            <ul>
+              <li>Try to limit the production dependencies to what is strictly necessary</li>
+              <ul style="font-size: 0.8em;">
+                <li>Cif parsing: no external depencencies</li>
+                <li>Crystal Structure abstraction: Math.js for linear algebra</li>
+                <li>Ortep3D and CifViewer: Three.js for the 3D display</li>
+              </ul>
+              <li>Less restricted for development</li>
+              <ul style="font-size: 0.8em;">
+                <li>Build: Vite</li>
+                <li>Testing: Vitest</li>
+                <li>Linting: ESLint</li>
+                <li>Pre-commit hooks: Husky</li>
+              </ul>
+            </ul>
+          </div>
+          <div class="column">
+            <div class="architecture-diagram">
+              <div class="arch-layer">
+                <div class="arch-box cif">
+                  <h4>CIF</h4>
+                  <div class="arch-details">Block -> Loop</div>
+                </div>
+              </div>
+              <div class="arch-arrow">↓</div>
+              <div class="arch-layer">
+                <div class="arch-box crystal">
+                  <h4>CrystalStructure</h4>
+                </div>
+              </div>
+              <div class="arch-arrow">↓</div>
+              <div class="arch-layer">
+                <div class="arch-box ortep">
+                  <h4>ORTEP3DStructure</h4>
+                  <div class="arch-details">getGroup() returns the THREE.js Group</div>
+                </div>
+              </div>
+              <div class="arch-arrow">↓</div>
+              <div class="arch-layer">
+                <div class="arch-box viewer">
+                  <h4>CrystalViewer</h4>
+                  <div class="arch-details">Camera, Selection, Modifiers</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+      </section>
+
+      <section>
+        <h2>Problem specific Three.js optimisations</h2>
+        <div class="columns">
+          <div class="column">
+            <ul>
+              <li>Three.js benefits greatly from reusing objects with different deformations</li>
+              <ul style="font-size: 0.8em;">
+                <li>There is only one base bond object</li>
+                <li>There is one base atom object per atom colour</li>
+                <li>There is one base atom ring object per ring colour</li>
+              </ul>
+              <li>Only redraw on interaction</li>
+              <ul style="font-size: 0.8em;">
+                <li>By default, Three.js is also meant for animation. Limiting redrawing the objects to active user interactions enables the presence of a larger number of active widgets.</li>
+              </ul>
+            </ul>
+            
+          </div>
+          <div class="column">
+            <div class="cifvis-container" id="cifvis-demo">
+              <cifview-widget
+                src="./src/assets/xylitol.cif"
+                caption="Crystal Structure Caption"
+                hydrogen-mode="constant">
+              </cifview-widget>
+            </div>    
+          </div>
+        </div>
+      </section>
+
+      <section>
+        <h2>Development with Vite</h2>
+        <ul>
+          <li>Can package up websites and JavaScript scripts for usage and deployment</li>
+          <li>Cifvis uses three different configs:</li>
+          <ul style="font-size: 0.8em;">
+            <li>base: build library</li>
+            <li>alldeps: build one file including all depencencies</li>
+            <li>demo: build demo and tutorial websites</li>
+          </ul>
+          <li>Supports plugins, used for including default SVG files for icons into library</li>
+          <li>Support dev mode, which reloads whenever files in the project are changed (which speeds things up a lot).</li>
+        </ul>
+      </section>
+
+      <section>
+        <h2>Testing with Vitest: Syntax</h2>
+        <p>Test files are located next to the library file with the ending: <code>*.test.js</code></p>
+        <div class="columns">
+          <div class="column">
+        <pre style="height: 100%;"><code class="JS">describe('CIF Parser', () => {
+  describe('CIF class', () => {
+      test('parses multiple data blocks', () => {
+          const cif = new CIF(`data_block1
+_cell_length_a 5.4309(5)
+
+data_block2
+_cell_length_a 3.2468(3)`);      
+          const blocks = cif.getAllBlocks();
+          expect(blocks).toHaveLength(2);
+          expect(blocks[0].dataBlockName).toBe('block1');
+          expect(blocks[1].dataBlockName).toBe('block2');
+      });
+  });
+});</code></pre>
+      </div>
+      <div class="column fragment">
+        <pre style="height: 100%;">
+          <code class="JS">/**
+* @vi-environment jsdom
+*/
+
+test('loads structure from URL', async () => {
+  const widget = document.createElement('cifview-widget');
+  widget.setAttribute('src', 'test.cif');
+  document.body.appendChild(widget);
+
+  // We need to wait longer for the fetch and loadCIF to complete
+  await new Promise(resolve => setTimeout(resolve, 20));
+
+  expect(mockFetch).toHaveBeenCalledWith('test.cif');
+  expect(mockCrystalViewer.loadCIF).toHaveBeenCalled();
+});</code>
+        </pre>
+
+      </div>
+        </div>
+      </section>
+      <section>
+        <h2>Vitest: Output</h2>
+        <div class="columns">
+          <div class="column" style="text-align: left;">
+            <h3>Implement testing in CLI</h3>
+            <p>Just use a simple script in the <code>package.json</code></p>
+            <p><code class="bash">vitest run</code></p>
+            <h3>HTML coverage report via command</h3>
+            <p><code class="bash">vitest run --coverage</code></p>
+            <p>Produces CLI out and a HTML report</p>
+          </div>
+          <div class="column fragment" style="text-align: left;">
+            <h3>Integration with VSCode</h3>
+            <p>Integration using Vitest plugin</p>
+            <p>Allows for:</p>
+            <ul>
+              <li>Display of coverage in VSCode</li>
+              <li>Easy execution of a subset of tests</li>
+              <li>Execution of tests with break points</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+      <section>
+        <h2>Integration tests</h2>
+        <ul>
+          <li>Integration tests were implemented as separate scripts</li>
+          <li>Need to be pointed at a folder with a database of cif files</li>
+          <li>With help of LLM also created a bash script to extract cif files that failed unexpectedly</li>
+          <li>Sparked another two weeks of bug squashing as lots of edge cases were discovered</li>
+        </ul>
+      </section>
+
+      <section>
+        <h2>Linting with ESLint</h2>
+        <ul>
+          <li>Enables linting (automatic formatting of the code to a common standart)</li>
+          <li>Allows for detailed settings for all the individual items</li>
+          <li>Plugin also enables checking whether JSDoc documentation has been done and is consistent</li>
+        </ul>
+      </section>
+
+      <section>
+        <h2>Pre-commit hooks with husky</h2>
+        <ul>
+          <li>Pre-commit hooks are executed as you commit using git.</li>
+          <li>Easy adding of pre-commit hooks via entry to the package.json</li>
+          <li>Here ensure that ESLint is executed upon commit.</li>
+          <li>Actually the requirement I am least sure about.</li>
+        </ul>
+      </section>
+
+      <section>
+        <h2>Continuous Integration, Delivery and Deployment</h2>
+        <p>Two GitHub workflows are triggered upon committing to <code>main</code>:</p>
+        <ul>
+          <li>Test: Run all tests implemented with vitest and test whether there are issues flagged by ESLint</li>
+          <li>Deploy: Subsequently build for all three vite config files and deploy the build libraries and demo website to github pages</li>
+        </ul>
+      </section>
+
+      <section>
+        <h2>Releasing the library</h2>
+        <ul>
+          <li>The library is manually released onto npm when the version number is increased</li>
+          <li>Setup was as easy as following the instructions on npm to set that up</li>
+          <li>Also manually put releases onto GitHub</li>
+        </ul>
+      </section>
+
+      <section>
+        <h2>The left-over sharp bits</h2>
+        <ul>
+          <li>I wanted to have a default CSS style for the widget that is tranferred with the library. However that means all styling using CSS can only be done using the <code>!important</code> flag</li>
+          <li>There are some minor functions missing (as mentioned in the original presentation)</li>
+          <li>As it is the first solution working nicely on mobile, maybe release as single website app?</li>
+        </ul>
+      </section>
+
+      <section>
+        <h1>Thank you for your kind attention</h1>
+        <div style="font-size: 1.8em;">Creation of presentation was done using</div>
+        <ul>
+          <li>Reveal.js for slides</li>
+          <li>D3.js for bar plots</li>
+          <li>CifVis obviously</li>
+        </ul>
+      </section>
     </div>
   </div>
 
